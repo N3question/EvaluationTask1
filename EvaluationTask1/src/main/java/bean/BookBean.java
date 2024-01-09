@@ -5,16 +5,25 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class BookBean implements Serializable {
+//	@NotNull(message = "JANコードは必須です")
 	private String JAN_CD;
+//	@NotNull(message = "ISBNコードは必須です")
 	private String ISBN_CD;
+//	@NotNull(message = "書籍名称は必須です")
 	private String BOOK_NM;
+//	@NotNull(message = "書籍名称カナは必須です")
 	private String BOOK_KANA;
+//	@NotNull(message = "価格は必須です")
 	private int PRICE;
+//	@NotNull(message = "発行日は必須です")
 	private Date ISSUE_DATE;
+	
 	private Timestamp CREATE_DATETIME;
 	private Timestamp UPDATE_DATETIME;
 	
 	public BookBean() {}
+	
+    // 一覧表示	
 	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, int price, Date issueDate, Timestamp createDatetime, Timestamp updateDatetime) {
 		this.JAN_CD = janCd;
 		this.ISBN_CD = isbnCd;
@@ -24,6 +33,27 @@ public class BookBean implements Serializable {
 		this.ISSUE_DATE = issueDate;
 		this.CREATE_DATETIME = createDatetime;
 		this.UPDATE_DATETIME = updateDatetime;
+	}
+	
+	// 更新処理
+	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, int price, Date issueDate, Timestamp updateDatetime) {
+		this.JAN_CD = janCd;
+		this.ISBN_CD = isbnCd;
+		this.BOOK_NM = bookNm;
+		this.BOOK_KANA = bookKana;
+		this.PRICE = price;
+		this.ISSUE_DATE = issueDate;
+		this.UPDATE_DATETIME = updateDatetime;
+	}
+	
+    // 編集画面表示	
+	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, int price, Date issueDate) {
+		this.JAN_CD = janCd;
+		this.ISBN_CD = isbnCd;
+		this.BOOK_NM = bookNm;
+		this.BOOK_KANA = bookKana;
+		this.PRICE = price;
+		this.ISSUE_DATE = issueDate;
 	}
 	
 	public String getJAN_CD() {
