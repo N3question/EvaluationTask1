@@ -1,21 +1,25 @@
 package bean;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class BookBean implements Serializable {
-//	@NotNull(message = "JANコードは必須です")
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class BookBean {
+	@NotNull(message = "JANコードは必須です")
+	@Size(max = 13, message = "JANコードは13桁で入力してください")
 	private String JAN_CD;
-//	@NotNull(message = "ISBNコードは必須です")
+	@Size(max = 13, message = "ISBNコードは13桁で入力してください")
+	@NotNull(message = "ISBNコードは必須です")
 	private String ISBN_CD;
-//	@NotNull(message = "書籍名称は必須です")
+	@NotNull(message = "書籍名称は必須です")
 	private String BOOK_NM;
-//	@NotNull(message = "書籍名称カナは必須です")
+	@NotNull(message = "書籍名称カナは必須です")
 	private String BOOK_KANA;
-//	@NotNull(message = "価格は必須です")
+	@NotNull(message = "価格は必須です")
 	private int PRICE;
-//	@NotNull(message = "発行日は必須です")
+	@NotNull(message = "発行日は必須です")
 	private Date ISSUE_DATE;
 	
 	private Timestamp CREATE_DATETIME;

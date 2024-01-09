@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
 
 import bean.BookBean;
 import jakarta.servlet.ServletException;
@@ -13,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.BookModel;
+import validation.BeanValidation;
 
 @WebServlet("/edit")
 public class EditServlet extends HttpServlet {
@@ -41,7 +44,6 @@ public class EditServlet extends HttpServlet {
 	    String bookKana = request.getParameter("book_name_kana");
 	    int price = Integer.parseInt(request.getParameter("price"));
 	    String issueDate = request.getParameter("issue_date");
-	    
 	    // 現在の時刻を取得（update用）
 	    LocalDateTime nowDate = LocalDateTime.now();
 	    Timestamp updateDateTime = Timestamp.valueOf(nowDate);
@@ -55,27 +57,30 @@ public class EditServlet extends HttpServlet {
         bookbean.setPRICE(price);
         bookbean.setISSUE_DATE(Date.valueOf(issueDate));
         bookbean.setUPDATE_DATETIME(updateDateTime);
-//		try {
-//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		    Date formattedDate = (Date) dateFormat.parse(issueDate);
-//		    
-//			bookbean.setISSUE_DATE(formattedDate);
-//		} catch (ParseException ex) {
-//			ex.printStackTrace();
-//		}
-		
-		// 更新処理
-		BookModel.updateBookInfo(bookbean, jan_cd);
-		
-		// Listの表示
-		ArrayList<BookBean> bookList = BookModel.getBookListAll();
-		request.setAttribute("bookList", bookList);
 		
 		// Bean Validationは途中
-		// BeanValidation.validate(bookbean);
-		
-		String view = "/WEB-INF/views/index.jsp";
-        request.getRequestDispatcher(view).forward(request, response);
+//		if (BeanValidation.validate(request, bookbean)) {
+//			// 更新処理
+//			BookModel.updateBookInfo(bookbean, jan_cd);
+//			
+//			// BookListの表示
+//			ArrayList<BookBean> bookList = BookModel.getBookListAll();
+//			request.setAttribute("bookList", bookList);
+//			
+//			String view = "/WEB-INF/views/index.jsp";
+//	        request.getRequestDispatcher(view).forward(request, response);
+//		} else {
+//			response.sendRedirect("edit");
+//		}
+        Set<ConstraintViolation<BookBean>> violations = BeanValidation.validate(bookbean);
+
+        if (violations.isEmpty()) {
+            response.getWriter().println("Book is valid!");
+        } else {
+            for (ConstraintViolation<BookBean> violation : violations) {
+                response.getWriter().println(violation.getPropertyPath() + ": " + violation.getMessage());
+            }
+        }
 	}
 
 }
