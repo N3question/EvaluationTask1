@@ -15,6 +15,16 @@ public class BookBean implements Serializable {
 	private Timestamp UPDATE_DATETIME;
 	
 	public BookBean() {}
+	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, int price, Date issueDate, Timestamp createDatetime, Timestamp updateDatetime) {
+		this.JAN_CD = janCd;
+		this.ISBN_CD = isbnCd;
+		this.BOOK_NM = bookNm;
+		this.BOOK_KANA = bookKana;
+		this.PRICE = price;
+		this.ISSUE_DATE = issueDate;
+		this.CREATE_DATETIME = createDatetime;
+		this.UPDATE_DATETIME = updateDatetime;
+	}
 	
 	public String getJAN_CD() {
 		return JAN_CD;
