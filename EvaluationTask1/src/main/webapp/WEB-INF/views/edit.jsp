@@ -13,7 +13,7 @@
 <body>
 	<div class="container">
 		<div class="row" style="height:100vh;">
-			<div class="col-lg-3 m-auto">
+			<div class="m-auto" style="width:350px;">
 				<h5>Book Info Edit</h5>
 				<div class="box">
 					<div class="icon">
@@ -22,7 +22,7 @@
 						</svg>
 						<span class="span">#32</span>
 					</div>
-					<form action="">
+					<form action="edit?jan_cd=<%%>" method="post">
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingJanCD"
 								   name="jan_cd"
@@ -64,6 +64,9 @@
 								   placeholder=""
 								   value="test"> 
 							<label for="floatingIssueDate"><small>発行日</small></label>
+						</div>
+						<div class="button">
+							<button type="submit" class="btn btn-outline-dark">Update</button>
 						</div>
 					</form>
 				</div>
