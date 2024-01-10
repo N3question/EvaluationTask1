@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="bean.BookBean" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,12 +26,14 @@
 						</svg>
 						<span class="span">#<%= bookInfo.getJAN_CD() %></span>
 					</div>
-					<% 
-					String message = (String)request.getAttribute("message");
-					%>
-					<% if (message != null) { %>
-					<%= message %>
-					<% } %>
+					<c:if test="${not empty validationErrors}">
+					    <h6>Validation Errors:</h6>
+					    <ul>
+					        <c:forEach var="error" items="${validationErrors}">
+					            <li><small>${error.message}</small></li>
+					        </c:forEach>
+					    </ul>
+					</c:if>
 					<form action="edit?jan_cd=<%= bookInfo.getJAN_CD() %>" method="post">
 						<div class="form-floating mb-3">
 							<input type="text" class="form-control" id="floatingJanCD"
