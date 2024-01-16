@@ -3,8 +3,8 @@ package bean;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class BookBean {
 	@NotNull(message = "JANコードは必須です")

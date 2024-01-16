@@ -7,16 +7,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
+import javax.xml.validation.Validator;
 
 import bean.BookBean;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
 import model.BookModel;
-import validation.BeanValidation;
 
 @WebServlet("/edit")
 public class EditServlet extends HttpServlet {
@@ -67,27 +69,25 @@ public class EditServlet extends HttpServlet {
 		request.setAttribute("bookList", bookList);
 		
 		// Bean Validationは途中
-//		if (BeanValidation.validate(request, bookbean)) {
-//			// 更新処理
-//			BookModel.updateBookInfo(bookbean, jan_cd);
-//			
-//			// BookListの表示
-//			ArrayList<BookBean> bookList = BookModel.getBookListAll();
-//			request.setAttribute("bookList", bookList);
-//			
-//			String view = "/WEB-INF/views/index.jsp";
-//	        request.getRequestDispatcher(view).forward(request, response);
-//		} else {
-//			response.sendRedirect("edit");
-//		}
-        Set<ConstraintViolation<BookBean>> violations = BeanValidation.validate(bookbean);
+		// Validator を取得
+//		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//        Validator validator = factory.getValidator();
+		
+//		// バリデーションを実行
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<BookBean>> violations = validator.validate(bookbean);
 
         if (violations.isEmpty()) {
-            response.getWriter().println("Book is valid!");
+            // バリデーション成功時の処理
+            response.getWriter().println("バリデーション成功!");
         } else {
-            for (ConstraintViolation<BookBean> violation : violations) {
-                response.getWriter().println(violation.getPropertyPath() + ": " + violation.getMessage());
-            }
+            // バリデーションエラー時の処理
+            request.setAttribute("user", user);
+            request.setAttribute("nameError", getErrorMessage(violations, "name"));
+            request.setAttribute("emailError", getErrorMessage(violations, "email"));
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/userForm.jsp");
+            dispatcher.forward(request, response);
         }
 	}
 
