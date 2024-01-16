@@ -1,30 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
-<%@ page import="bean.BookBean" %>
-<%@ page import="java.text.NumberFormat" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.sql.Timestamp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="./css/style.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-	  rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
-	  crossorigin="anonymous">
 <title>EvaluationTask1</title>
 </head>
 <body>
+<%@include file="header.jsp"%>
+<%@include file="headerTopSpace.jsp"%>
+<main>
 	<div class="container">
-		<div class="row" style="height:100vh;">
+		<div class="row" style="height:calc(100vh - 54px);">
 			<div class="col-lg-10 m-auto">
 				<div class="title">
 					<h5 class="head-title">Book Index</h5>
 					<p class="small sub-title">クリックで書籍情報の編集可能</p>
 				</div>
 				<div class="box">
-					<table class="table table-borderless table-hover" style="overflow-x: scroll;">
+					<table class="table table-borderless table-hover" style="overflow-x: scroll; overflow-y: scroll;">
 						<thead>
 							<tr>
 								<th class="nowrap"><small>JANコード</small></th>
@@ -34,6 +28,7 @@
 								<th class="nowrap"><small>発行日</small></th>
 								<th class="nowrap"><small>作成日時</small></th>
 								<th class="nowrap"><small>更新日時</small></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -69,6 +64,14 @@
 									<%
 									}
 									%>
+									<td class="align">
+										<a href="#">
+											<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+												<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+												<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+											</svg>
+										</a>
+									</td>
 								</tr>
 							<% 
 							} 
@@ -79,8 +82,6 @@
 			</div>
 		</div>
 	</div>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-		  rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
-		  crossorigin="anonymous">
+</main>
 </body>
 </html>

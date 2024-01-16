@@ -98,4 +98,38 @@ public class BookModel {
 			ex.printStackTrace();
 		}
 	}
+	
+	// 新規登録
+	public static void insertBookInfo(BookBean bookbean) {
+		final String INSERT_BOOKINFO_SQL = "INSERT INTO BOOK (JAN_CD, ISBN_CD, BOOK_NM, BOOK_KANA, PRICE, ISSUE_DATE, CREATE_DATETIME, UPDATE_DATETIME) VALUES(?, ?, ?, ?, ?, ?, ?, NULL);";
+		ArrayList<Object> paramList = new ArrayList<>() {{ 
+			add(bookbean.getJAN_CD());
+			add(bookbean.getISBN_CD());
+			add(bookbean.getBOOK_NM());
+			add(bookbean.getBOOK_KANA());
+			add(bookbean.getPRICE());
+			add(bookbean.getISSUE_DATE());
+			add(bookbean.getCREATE_DATETIME());
+		}};
+		LoadJDBC.LoadingJDBC();
+		try (Connection conn = ConnectionToDB.getConnection()) {
+			GeneralDao.executeUpdate(conn, INSERT_BOOKINFO_SQL, paramList);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	// 削除
+	public static void deleteBookInfo(String jan_cd) {
+		final String DELETE_BOOKINFO_SQL = "DELETE FROM BOOK WHERE JAN_CD = ?";
+		ArrayList<Object> paramList = new ArrayList<>() {{ 
+			add(jan_cd);
+		}};
+		LoadJDBC.LoadingJDBC();
+		try (Connection conn = ConnectionToDB.getConnection()) {
+			GeneralDao.executeUpdate(conn, DELETE_BOOKINFO_SQL, paramList);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 }

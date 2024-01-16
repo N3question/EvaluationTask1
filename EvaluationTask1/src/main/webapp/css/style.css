@@ -4,6 +4,7 @@
 	border-radius: 10px;
 	padding: 25px;
 	margin-top: 20px;
+	box-shadow: 5px 10px 10px 5px #072f4f;
 }
 table {
 	text-align:center;
@@ -61,4 +62,28 @@ table {
 .th{
  	position: sticky;
     top: 0;
+}
+
+.header {
+	height:54px; 
+	border-bottom: 1px lightgray solid;
+	background-color:white; 
+	position:relative; 
+	top: 0; 
+	left: 0; 
+	z-index:2; 
+	display:flex; 
+	align-items:center;
+}
+
+.top-space {
+	height:54px; 
+}
+
+.modal-header {
+	background-color: #072f4f; 
+}
+
+.modal-text {
+	color: white;
 }
