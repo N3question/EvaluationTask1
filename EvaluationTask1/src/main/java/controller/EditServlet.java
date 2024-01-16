@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -57,6 +58,13 @@ public class EditServlet extends HttpServlet {
         bookbean.setPRICE(price);
         bookbean.setISSUE_DATE(Date.valueOf(issueDate));
         bookbean.setUPDATE_DATETIME(updateDateTime);
+		
+		// 更新処理
+		BookModel.updateBookInfo(bookbean, jan_cd);
+		
+		// Listの表示
+		ArrayList<BookBean> bookList = BookModel.getBookListAll();
+		request.setAttribute("bookList", bookList);
 		
 		// Bean Validationは途中
 //		if (BeanValidation.validate(request, bookbean)) {
