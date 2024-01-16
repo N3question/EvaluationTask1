@@ -5,20 +5,15 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Set;
-
-import javax.xml.validation.Validator;
 
 import bean.BookBean;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
 import model.BookModel;
+import validation.BeanValidation;
 
 @WebServlet("/edit")
 public class EditServlet extends HttpServlet {
@@ -29,9 +24,10 @@ public class EditServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String janCd = request.getParameter("jan_cd");
+		String jan_cd = request.getParameter("jan_cd");
+		BookBean bookInfo = BookModel.getBookInfo(jan_cd);
 		
-		BookBean bookInfo = BookModel.getBookInfo(janCd);
+		request.setAttribute("jan_cd", jan_cd);
 		request.setAttribute("bookInfo", bookInfo);
 		
 		String view = "/WEB-INF/views/edit.jsp";
@@ -40,8 +36,8 @@ public class EditServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// リクエストパラメータから値を取得
-		String jan_cd = request.getParameter("jan_cd");
-		String janCd = request.getParameter("janCd");
+		String jan_cd = request.getParameter("jan_cd"); // URLの値
+		String janCd = request.getParameter("janCd"); // フォームの値
 	    String isbnCd = request.getParameter("isbn_cd");
 	    String bookNm = request.getParameter("book_name");
 	    String bookKana = request.getParameter("book_name_kana");
@@ -61,6 +57,15 @@ public class EditServlet extends HttpServlet {
         bookbean.setISSUE_DATE(Date.valueOf(issueDate));
         bookbean.setUPDATE_DATETIME(updateDateTime);
 		
+        // Bean Validationは途中
+        boolean existValidation = BeanValidation.validate(request, bookbean);
+        if (existValidation) {
+        	request.setAttribute("jan_cd", jan_cd);
+        	String view = "/WEB-INF/views/edit.jsp";
+            request.getRequestDispatcher(view).forward(request, response);
+        	return;
+        }
+        
 		// 更新処理
 		BookModel.updateBookInfo(bookbean, jan_cd);
 		
@@ -68,27 +73,8 @@ public class EditServlet extends HttpServlet {
 		ArrayList<BookBean> bookList = BookModel.getBookListAll();
 		request.setAttribute("bookList", bookList);
 		
-		// Bean Validationは途中
-		// Validator を取得
-//		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//        Validator validator = factory.getValidator();
-		
-//		// バリデーションを実行
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<BookBean>> violations = validator.validate(bookbean);
-
-        if (violations.isEmpty()) {
-            // バリデーション成功時の処理
-            response.getWriter().println("バリデーション成功!");
-        } else {
-            // バリデーションエラー時の処理
-            request.setAttribute("user", user);
-            request.setAttribute("nameError", getErrorMessage(violations, "name"));
-            request.setAttribute("emailError", getErrorMessage(violations, "email"));
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/userForm.jsp");
-            dispatcher.forward(request, response);
-        }
+		String view = "/WEB-INF/views/index.jsp";
+        request.getRequestDispatcher(view).forward(request, response);
 	}
 
 }

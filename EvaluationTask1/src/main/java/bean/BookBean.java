@@ -3,19 +3,24 @@ package bean;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 public class BookBean {
-	@NotNull(message = "JANコードは必須です")
-	@Size(max = 13, message = "JANコードは13桁で入力してください")
+	@NotBlank(message = "JANコードは必須です")
+	@Size(min = 13, max = 13, message = "13桁で入力してください")
+	@Pattern(regexp = "^[0-9]+$", message = "半角数字のみを入力してください")
 	private String JAN_CD;
-	@Size(max = 13, message = "ISBNコードは13桁で入力してください")
-	@NotNull(message = "ISBNコードは必須です")
+	@NotBlank(message = "ISBNコードは必須です")
+	@Size(min = 13, max = 13, message = "13桁で入力してください")
+	@Pattern(regexp = "^[0-9]+$", message = "半角数字のみを入力してください")
 	private String ISBN_CD;
-	@NotNull(message = "書籍名称は必須です")
+	@NotBlank(message = "書籍名称は必須です")
 	private String BOOK_NM;
-	@NotNull(message = "書籍名称カナは必須です")
+	@NotBlank(message = "書籍名称カナは必須です")
 	private String BOOK_KANA;
 	@NotNull(message = "価格は必須です")
 	private int PRICE;
