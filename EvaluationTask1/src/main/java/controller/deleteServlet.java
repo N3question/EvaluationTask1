@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import bean.BookBean;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,6 +23,12 @@ public class deleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String janCd = request.getParameter("jan_cd");
 		BookModel.deleteBookInfo(janCd);
+		
+		ArrayList<BookBean> bookList = BookModel.getBookListAll();
+		request.setAttribute("bookList", bookList);
+	
+		String view = "/WEB-INF/views/index.jsp";
+        request.getRequestDispatcher(view).forward(request, response);
 	}
 
 }

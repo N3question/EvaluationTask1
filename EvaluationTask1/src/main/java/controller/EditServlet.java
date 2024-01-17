@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import bean.BookBean;
+import group.group.All;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -57,8 +58,8 @@ public class EditServlet extends HttpServlet {
         bookbean.setISSUE_DATE(Date.valueOf(issueDate));
         bookbean.setUPDATE_DATETIME(updateDateTime);
 		
-        // Bean Validationは途中
-        boolean existValidation = BeanValidation.validate(request, bookbean);
+        // Bean Validation
+        boolean existValidation = BeanValidation.validate(request, bookbean, All.class);
         if (existValidation) {
         	request.setAttribute("jan_cd", jan_cd);
         	String view = "/WEB-INF/views/edit.jsp";

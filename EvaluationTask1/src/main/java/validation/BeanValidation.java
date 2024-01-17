@@ -10,9 +10,9 @@ import bean.BookBean;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class BeanValidation {
-	public static boolean validate (HttpServletRequest request, BookBean bookbean) {
+	public static <T> boolean validate (HttpServletRequest request, BookBean bookbean, Class<T> groupClass) {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator(); // 取得
-        Set<ConstraintViolation<BookBean>> violations = validator.validate(bookbean); // 実行
+        Set<ConstraintViolation<BookBean>> violations = validator.validate(bookbean, groupClass); // 実行
         
         if(violations.size() > 0) {
 	        for (ConstraintViolation<BookBean> vi : violations) {

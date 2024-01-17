@@ -9,22 +9,26 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import group.group.Group1;
+import group.group.Group2;
+import group.group.Group3;
+
 public class BookBean {
-	@NotBlank(message = "JANコードは必須です")
-	@Size(min = 13, max = 13, message = "13桁で入力してください")
-	@Pattern(regexp = "^[0-9]+$", message = "半角数字のみを入力してください")
+	@NotBlank(groups = Group1.class, message = "JANコードは必須です")
+	@Size(min = 13, max = 13, groups = Group2.class, message = "13桁で入力してください")
+	@Pattern(regexp = "^[0-9]+$", groups = Group3.class, message = "半角数字のみを入力してください")
 	private String JAN_CD;
-	@NotBlank(message = "ISBNコードは必須です")
-	@Size(min = 13, max = 13, message = "13桁で入力してください")
-	@Pattern(regexp = "^[0-9]+$", message = "半角数字のみを入力してください")
+	@NotBlank(groups = Group1.class, message = "ISBNコードは必須です")
+	@Size(min = 13, max = 13, groups = Group2.class, message = "13桁で入力してください")
+	@Pattern(regexp = "^[0-9]+$", groups = Group3.class, message = "半角数字のみを入力してください")
 	private String ISBN_CD;
-	@NotBlank(message = "書籍名称は必須です")
+	@NotBlank(groups = {Group1.class, Group2.class, Group3.class}, message = "書籍名称は必須です")
 	private String BOOK_NM;
-	@NotBlank(message = "書籍名称カナは必須です")
+	@NotBlank(groups = {Group1.class, Group2.class, Group3.class}, message = "書籍名称カナは必須です")
 	private String BOOK_KANA;
-	@NotNull(message = "価格は必須です")
-	private int PRICE;
-	@NotNull(message = "発行日は必須です")
+	@NotNull(groups = {Group1.class, Group2.class, Group3.class}, message = "価格は必須です")
+	private Integer PRICE;
+	@NotNull(groups = {Group1.class, Group2.class, Group3.class}, message = "発行日は必須です")
 	private Date ISSUE_DATE;
 	
 	private Timestamp CREATE_DATETIME;
@@ -33,7 +37,7 @@ public class BookBean {
 	public BookBean() {}
 	
     // 一覧表示	
-	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, int price, Date issueDate, Timestamp createDatetime, Timestamp updateDatetime) {
+	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, Integer price, Date issueDate, Timestamp createDatetime, Timestamp updateDatetime) {
 		this.JAN_CD = janCd;
 		this.ISBN_CD = isbnCd;
 		this.BOOK_NM = bookNm;
@@ -45,7 +49,7 @@ public class BookBean {
 	}
 	
 	// 更新処理
-	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, int price, Date issueDate, Timestamp updateDatetime) {
+	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, Integer price, Date issueDate, Timestamp updateDatetime) {
 		this.JAN_CD = janCd;
 		this.ISBN_CD = isbnCd;
 		this.BOOK_NM = bookNm;
@@ -56,7 +60,7 @@ public class BookBean {
 	}
 	
     // 編集画面表示	
-	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, int price, Date issueDate) {
+	public BookBean(String janCd, String isbnCd, String bookNm, String bookKana, Integer price, Date issueDate) {
 		this.JAN_CD = janCd;
 		this.ISBN_CD = isbnCd;
 		this.BOOK_NM = bookNm;
@@ -97,11 +101,11 @@ public class BookBean {
 		BOOK_KANA = bOOK_KANA;
 	}
 
-	public int getPRICE() {
+	public Integer getPRICE() {
 		return PRICE;
 	}
 
-	public void setPRICE(int pRICE) {
+	public void setPRICE(Integer pRICE) {
 		PRICE = pRICE;
 	}
 
