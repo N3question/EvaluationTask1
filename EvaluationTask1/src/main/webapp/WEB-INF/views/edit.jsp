@@ -20,6 +20,7 @@
 				<% 
 				String jan_cd = (String)request.getAttribute("jan_cd");
 				BookBean bookInfo = (BookBean)request.getAttribute("bookInfo");
+				Integer price = (Integer)bookInfo.getPRICE();
 				%>
 				<h5>Book Info Edit</h5>
 				<div class="box">
@@ -119,7 +120,7 @@
 							<input type="number" class="form-control" id="floatingPrice"
 								   name="price"
 								   placeholder=""
-								   value="<%= bookInfo.getPRICE() %>"> 
+								   value="<%= price %>"> 
 							<label for="floatingPrice">
 								<small>価格
 									<% 
