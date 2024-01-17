@@ -16,7 +16,7 @@ public class BookModel {
 	
     // 一覧表示
 	public static ArrayList<BookBean> getBookListAll() {
-		final String SELECT_BOOKLIST_SQL = "SELECT * FROM BOOK";
+		final String SELECT_BOOKLIST_SQL = "SELECT * FROM BOOK ORDER BY CREATE_DATETIME DESC";
 		ArrayList<Object> paramList = new ArrayList<Object>() {{ }};
 		ArrayList<BookBean> bookList = new ArrayList<BookBean>();
 		
@@ -29,7 +29,7 @@ public class BookModel {
                 String isbnCd = result.getString("ISBN_CD");
                 String bookNm = result.getString("BOOK_NM");
                 String bookKana = result.getString("BOOK_KANA");
-                int price = result.getInt("PRICE");
+                Integer price = Integer.valueOf(result.getInt("PRICE"));
                 Date issueDate = result.getDate("ISSUE_DATE");
                 Timestamp createDatetime = result.getTimestamp("CREATE_DATETIME");
                 Timestamp updateDatetime = result.getTimestamp("UPDATE_DATETIME");

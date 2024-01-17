@@ -22,7 +22,7 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<BookBean> bookList = BookModel.getBookListAll();
 		request.setAttribute("bookList", bookList);
-		
+	
 		String view = "/WEB-INF/views/index.jsp";
         request.getRequestDispatcher(view).forward(request, response);
 	}

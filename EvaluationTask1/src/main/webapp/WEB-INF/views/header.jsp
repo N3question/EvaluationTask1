@@ -26,8 +26,13 @@
 	    			</a>
     			</li>
     			<li class="ms-auto me-2" style="list-style:none; display: flex; align-items: center;">
+    				<% 
+    				String showModalString = (String) request.getAttribute("showModal");
+    			    Boolean showModal = Boolean.parseBoolean(showModalString);
+    				%>
 					<button type="button" class="btn"
-						data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="border:none;">
+						data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="border:none;"
+						id="modalTrigger" data-show-modal="<%= showModal %>">
 						<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" 
 							 class="bi bi-plus-square-dotted"
 							 style="margin-bottom:30px;"
@@ -39,7 +44,10 @@
     		</ul>
     	</div>
 	</header>
-
+	
+	<% 
+	BookBean input = (BookBean)request.getAttribute("bookInfo");
+	%>
 	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -49,46 +57,134 @@
 					<small class="modal-title modal-text" id="staticBackdropLabel">
 						書籍登録
 					</small>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<a href="index" class="text-light">
+						<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+							<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+							<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+						</svg>
+					</a>
 				</div>
 				<div class="modal-body">
-				<form action="" method="post">
+				<form action="createBookInfo" method="post">
 					<div class="form-floating mb-3">
 						<input type="text" class="form-control" id="floatingJanCD"
 							   name="janCd"
-							   placeholder=""> 
-						<label for="floatingJanCD"><small>JANコード</small></label>
+							   placeholder=""
+							   value="<%= input != null ? input.getJAN_CD() : "" %>"> 
+						<label for="floatingJanCD">
+							<small>JANコード
+								<% 
+								String JAN_CD = (String)request.getAttribute("JAN_CD");
+								%>
+								<%
+								if (JAN_CD != null) {
+								%>
+									<small style="color:red;"><%= JAN_CD %></small>
+								<%	
+								}
+								%>
+							</small>
+						</label>
 					</div>
 					<div class="form-floating mb-3">
 						<input type="text" class="form-control" id="floatingIsbnCD"
 						       name="isbn_cd"
-							   placeholder=""> 
-						<label for="floatingIsbnCD"><small>ISBNコード</small></label>
+							   placeholder=""
+							   value="<%= input != null ? input.getISBN_CD() : "" %>"> 
+						<label for="floatingIsbnCD">
+							<small>ISBNコード
+								<% 
+								String ISBN_CD = (String)request.getAttribute("ISBN_CD");
+								%>
+								<%
+								if (ISBN_CD != null) {
+								%>
+									<small style="color:red;"><%= ISBN_CD %></small>
+								<%	
+								}
+								%>
+							</small>
+						</label>
 					</div>
 					<div class="form-floating mb-3">
 						<input type="text" class="form-control" id="floatingBookName"
 							   name="book_name"
-							   placeholder=""> 
-						<label for="floatingBookName"><small>書籍名称</small></label>
+							   placeholder=""
+							   value="<%= input != null ? input.getBOOK_NM() : "" %>"> 
+						<label for="floatingBookName">
+							<small>書籍名称
+								<% 
+								String BOOK_NM = (String)request.getAttribute("BOOK_NM");
+								%>
+								<%
+								if (BOOK_NM != null) {
+								%>
+									<small style="color:red;"><%= BOOK_NM %></small>
+								<%	
+								}
+								%>
+							</small>
+						</label>
 					</div>
 					<div class="form-floating mb-3">
 						<input type="text" class="form-control" id="floatingfloatingBookKana"
 							   name="book_name_kana"
-							   placeholder=""> 
-						<label for="floatingfloatingBookKana"><small>書籍名称カナ</small></label>
+							   placeholder=""
+							   value="<%= input != null ? input.getBOOK_KANA() : "" %>"> 
+						<label for="floatingfloatingBookKana">
+							<small>書籍名称カナ
+								<% 
+								String BOOK_KANA = (String)request.getAttribute("BOOK_KANA");
+								%>
+								<%
+								if (BOOK_KANA != null) {
+								%>
+									<small style="color:red;"><%= BOOK_KANA %></small>
+								<%	
+								}
+								%>
+							</small>
+						</label>
 					</div>
 					<div class="form-floating mb-3">
 						<input type="number" class="form-control" id="floatingPrice"
 							   name="price"
-							   placeholder=""> 
-						<label for="floatingPrice"><small>価格</small></label>
+							   placeholder=""
+							   value="<%= input != null ? input.getPRICE() : null %>"> 
+						<label for="floatingPrice">
+							<small>価格
+								<% 
+								String PRICE = (String)request.getAttribute("PRICE");
+								%>
+								<%
+								if (PRICE != null) {
+								%>
+									<small style="color:red;"><%= PRICE %></small>
+								<%	
+								}
+								%>
+							</small>
+						</label>
 					</div>
 					<div class="form-floating">
 						<input type="date" class="form-control" id="floatingIssueDate"
 							   name="issue_date"
-							   placeholder=""> 
-						<label for="floatingIssueDate"><small>発行日</small></label>
+							   placeholder=""
+							   value="<%= input != null ? input.getISSUE_DATE() : null %>"> 
+						<label for="floatingIssueDate">
+							<small>発行日
+								<% 
+								String ISSUE_DATE = (String)request.getAttribute("ISSUE_DATE");
+								%>
+								<%
+								if (ISSUE_DATE != null) {
+								%>
+									<small style="color:red;"><%= ISSUE_DATE %></small>
+								<%	
+								}
+								%>
+							</small>
+						</label>
 					</div>
 					<div class="button">
 						<button type="submit" class="btn btn-outline-dark my-4">Create</button>
@@ -98,5 +194,6 @@
 			</div>
 		</div>
 	</div>
+	<script src="./js/Script.js"></script>
 </body>
 </html>
